@@ -6,46 +6,58 @@ import (
 	"os"
 )
 
-func getCachedReleases() (releases []iRelease, count int) {
-	// read the json file in ../cache/collection.json if it exists
-	// and return the releases and count
-
-	// open the file
-	file, err := os.Open("../cache/collection.json")
-	if err != nil {
-		return releases, count
-	}
-	defer file.Close()
-
-	data := make([]byte, 1024)
-	_, err = file.Read(data)
-	if err != nil {
-		return releases, count
-	}
-
-	err = json.Unmarshal(data, &releases)
-	if err != nil {
-		return releases, count
-	}
-	return releases, count
-
-}
-
-func setCachedReleases(releases []iRelease) {
+func cachedFilePath() (filename string, directory string) {
 	homeDirName, err := os.UserHomeDir()
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
-	fmt.Println(homeDirName)
-	filename := fmt.Sprintf("%s/.cache/discogs/collection.json", homeDirName)
-	data := fmt.Sprintf("%v", releases)
-	err = os.WriteFile(filename, []byte(data), 0644)
+	filename = fmt.Sprintf("%s/.cache/discogs/collection.json", homeDirName)
+	directory = fmt.Sprintf("%s/.cache/discogs", homeDirName)
+	return filename, directory
+}
+
+func getCachedReleases() (releases []iRelease, count int) {
+	filename, _ := cachedFilePath()
+	file, err := os.Open(filename)
+	if err != nil {
+		return releases, count
+	}
+	defer file.Close()
+
+	err = json.NewDecoder(file).Decode(&releases)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return releases, count
+	}
+
+	count = len(releases)
+	return
+}
+
+func setCachedReleases(releases []iRelease) {
+	if (releases == nil) || (len(releases) == 0) {
+		return
+	}
+
+	out, err := json.Marshal(releases)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
-	if (releases == nil) || (len(releases) == 0) {
+
+	filename, cacheDir := cachedFilePath()
+	// data := fmt.Sprintf("%v", releases)
+	// write string to file and create file if not exists
+	err = os.MkdirAll(cacheDir, 0755)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	err = os.WriteFile(filename, []byte(out), 0644)
+	if err != nil {
+		fmt.Println("Error:", err)
 		return
 	}
 }

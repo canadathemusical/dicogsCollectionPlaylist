@@ -10,13 +10,14 @@ import (
 // No parameters.
 // No return values.
 func main() {
-	// allReleases := getAllReleases()
-	// fmt.Println("Releases:", len(allReleases))
-	releases, pages, err := getDiscogsCollectionResponse(1)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
-	fmt.Println("Pages:", pages)
-	fmt.Println("Result:", releases)
+	allReleases := getAllReleases()
+
+	fmt.Println("Releases:", len(allReleases))
+	// releases, pages, err := getDiscogsCollectionResponse(1)
+	// if err != nil {
+	// 	fmt.Println("Error:", err)
+	// 	return
+	// }
+	// fmt.Println("Pages:", pages)
+	// fmt.Println("Result:", releases)
 }

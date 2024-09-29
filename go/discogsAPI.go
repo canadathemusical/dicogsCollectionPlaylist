@@ -21,11 +21,6 @@ func composeURL(page int) string {
 	return fmt.Sprintf("%s%s%s?page=%d&per_page=75", BaseURL, UserPath, CollectionReleasePath, page)
 }
 
-// type discogsResponse struct {
-// 	Releases   []iRelease  `json:"releases"`
-// 	Pagination iPagination `json:"pagination"`
-// }
-
 func getDiscogsCollectionResponse(page int) ([]iRelease, iPagination, error) {
 	if page == 0 {
 		page = 1
@@ -59,6 +54,7 @@ func getDiscogsCollectionResponse(page int) ([]iRelease, iPagination, error) {
 
 func getAllReleases() []iRelease {
 	cachedReleases, count := getCachedReleases()
+	fmt.Println("Cached Releases:", count)
 	releases, pagination, err := getDiscogsCollectionResponse(1)
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -77,8 +73,10 @@ func getAllReleases() []iRelease {
 				return []iRelease{}
 			}
 			releases = append(releases, pageReleases...)
+
 			fmt.Printf("Page %d:\n", i)
-			fmt.Println(pageReleases)
+			fmt.Printf("Releases: %d\n", len(releases))
+			// fmt.Println(pageReleases)
 		}
 	}
 	setCachedReleases(releases)
