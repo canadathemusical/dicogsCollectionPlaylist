@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
 // main is the entry point of the program.
@@ -12,12 +13,15 @@ import (
 func main() {
 	allReleases := getAllReleases()
 
-	fmt.Println("Releases:", len(allReleases))
-	// releases, pages, err := getDiscogsCollectionResponse(1)
-	// if err != nil {
-	// 	fmt.Println("Error:", err)
-	// 	return
-	// }
-	// fmt.Println("Pages:", pages)
-	// fmt.Println("Result:", releases)
+	fmt.Println("Albums in collection:", len(allReleases))
+	// select 4 random releases
+	rand.Shuffle(len(allReleases), func(i, j int) {
+		allReleases[i], allReleases[j] = allReleases[j], allReleases[i]
+	})
+	for i := 0; i < 4; i++ {
+		release := allReleases[i]
+		artist := getArtist(release)
+		album := getAlbum(release)
+		fmt.Printf("%d. %s - %s\n", i+1, artist, album)
+	}
 }

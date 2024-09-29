@@ -54,7 +54,7 @@ func getDiscogsCollectionResponse(page int) ([]iRelease, iPagination, error) {
 
 func getAllReleases() []iRelease {
 	cachedReleases, count := getCachedReleases()
-	fmt.Println("Cached Releases:", count)
+
 	releases, pagination, err := getDiscogsCollectionResponse(1)
 	if err != nil {
 		fmt.Println("Error:", err)
