@@ -47,8 +47,7 @@ func setCachedReleases(releases []iRelease) {
 	}
 
 	filename, cacheDir := cachedFilePath()
-	// data := fmt.Sprintf("%v", releases)
-	// write string to file and create file if not exists
+
 	err = os.MkdirAll(cacheDir, 0755)
 	if err != nil {
 		fmt.Println("Error:", err)
