@@ -79,5 +79,5 @@ func getAllReleases() []iRelease {
 		}
 	}
 	setCachedReleases(releases)
-	return []iRelease{}
+	return releases
 }
