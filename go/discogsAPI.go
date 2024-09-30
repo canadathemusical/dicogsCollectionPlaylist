@@ -73,9 +73,6 @@ func getAllReleases() []iRelease {
 				return []iRelease{}
 			}
 			releases = append(releases, pageReleases...)
-
-			fmt.Printf("Page %d:\n", i)
-			fmt.Printf("Releases: %d\n", len(releases))
 		}
 	}
 	setCachedReleases(releases)
