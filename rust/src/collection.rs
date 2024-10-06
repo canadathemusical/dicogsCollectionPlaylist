@@ -1,11 +1,11 @@
 use serde_derive::Deserialize;
 use serde_derive::Serialize;
 
-pub type Root = Vec<Root2>;
+pub type Collection = Vec<Root2>;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Root2 {
+pub struct Album {
     pub id: i64,
     #[serde(rename = "instance_id")]
     pub instance_id: i64,
