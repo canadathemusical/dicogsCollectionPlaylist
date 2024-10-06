@@ -1,10 +1,24 @@
-use serde_derive::Deserialize;
-use serde_derive::Serialize;
+use serde::{Serialize, Deserialize};
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct CollectionReleasesResponse {
     pub pagination: Pagination,
     pub collection: Collection,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Pagination {
+    pub page: i64,
+    pub pages: i64,
+    pub per_page: i64,
+    pub items: i64,
+    pub urls: Urls,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+pub struct Urls {
+    pub last: String,
+    pub next: String,
 }
 
 pub type Collection = Vec<Album>;
@@ -63,19 +77,4 @@ pub struct Label {
     pub entity_type_name: String,
     pub id: i64,
     pub resource_url: String,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Pagination {
-    pub page: i64,
-    pub pages: i64,
-    pub per_page: i64,
-    pub items: i64,
-    pub urls: Urls,
-}
-
-#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct Urls {
-    pub last: String,
-    pub next: String,
 }

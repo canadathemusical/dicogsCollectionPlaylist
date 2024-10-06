@@ -1,5 +1,8 @@
 extern crate reqwest;
 use reqwest::header;
+mod collection;
+
+use collection::CollectionReleasesResponse;
 // function found using https://curlconverter.com/rust/
 // create a global constant
 static USER_AGENT: &str = "getMyCollection/0.1 +http://localhost";
