@@ -18,7 +18,9 @@ pub struct Pagination {
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Urls {
+    #[serde(default)]
     pub last: String,
+    #[serde(default)]
     pub next: String,
 }
 
