@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 extern crate regex;
 use regex::Regex;
 extern crate rand;
-use rand::Rng;
+use rand::seq::SliceRandom;
 
 static USER_AGENT: &str = "getMyCollection/0.1 +http://localhost";
 static BASE_URL: &str =
@@ -112,11 +112,11 @@ fn format_release(release: Album) -> String {
 }
 
 fn get_random_releases(releases: Vec<Album>) -> Vec<Album> {
-    let mut random_releases: Vec<Album> = Vec::new();
-    for _ in 0..4 {
-        let random_index = rand::thread_rng().gen_range(0..releases.len());
-        random_releases.push(releases[random_index].clone());
-    }
+    // let mut random_releases: Vec<Album> = Vec::new();
+
+    let mut rng = &mut rand::thread_rng();
+    let random_releases: Vec<Album> = releases.clone().choose_multiple(&mut rng, 4).cloned().collect();
+
     random_releases
 }
 
