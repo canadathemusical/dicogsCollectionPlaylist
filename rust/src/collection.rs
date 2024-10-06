@@ -1,6 +1,13 @@
 use serde_derive::Deserialize;
 use serde_derive::Serialize;
 
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Root {
+    pub pagination: Pagination,
+    pub collection: Collection,
+}
+
 pub type Collection = Vec<Album>;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -73,4 +80,22 @@ pub struct Label {
     pub id: i64,
     #[serde(rename = "resource_url")]
     pub resource_url: String,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Pagination {
+    pub page: i64,
+    pub pages: i64,
+    #[serde(rename = "per_page")]
+    pub per_page: i64,
+    pub items: i64,
+    pub urls: Urls,
+}
+
+#[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct Urls {
+    pub last: String,
+    pub next: String,
 }
