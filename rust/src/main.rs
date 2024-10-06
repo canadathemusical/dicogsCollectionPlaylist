@@ -5,7 +5,7 @@ use reqwest::header;
 static USER_AGENT: &str = "getMyCollection/0.1 +http://localhost";
 static BASE_URL: &str = "https://api.discogs.com/users/Ospreythirtyone/collection/folders/0/releases";
 
-fn initial_request() -> Result<(), Box<dyn std::error::Error>> {
+fn initial_request() -> Result<String, Box<dyn std::error::Error>> {
     let mut headers = header::HeaderMap::new();
     headers.insert("User-Agent", USER_AGENT.parse().unwrap());
 
@@ -13,16 +13,17 @@ fn initial_request() -> Result<(), Box<dyn std::error::Error>> {
         .redirect(reqwest::redirect::Policy::none())
         .build()
         .unwrap();
-    let res: ! = client.get(BASE_URL)
+    let res: String = client.get(BASE_URL)
         .headers(headers)
         .send()?
         .text()?;
-    println!("{}", res);
-
-    Ok(())
+    Ok(res)
 }
 
 
-fn main() -> Result<(), Box<dyn std::error::Error>> {
-    initial_request();
+fn main() {
+    match initial_request() {
+        Ok(res) => println!("{}", res),
+        Err(err) => eprintln!("{}", err)
+    }
 }
