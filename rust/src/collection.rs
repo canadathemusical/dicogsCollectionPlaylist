@@ -3,7 +3,8 @@ use serde::{Serialize, Deserialize};
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct CollectionReleasesResponse {
     pub pagination: Pagination,
-    pub collection: Collection,
+    #[serde(default)]
+    pub releases: Releases,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -21,7 +22,7 @@ pub struct Urls {
     pub next: String,
 }
 
-pub type Collection = Vec<Album>;
+pub type Releases = Vec<Album>;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Album {
