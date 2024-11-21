@@ -58,7 +58,8 @@ func getAllReleases() []iRelease {
 	releases, pagination, err := getDiscogsCollectionResponse(1)
 	if err != nil {
 		fmt.Println("Error:", err)
-		return []iRelease{}
+		fmt.Println("using cached collection")
+		return cachedReleases
 	}
 
 	if pagination.Items == count {
@@ -77,4 +78,15 @@ func getAllReleases() []iRelease {
 	}
 	setCachedReleases(releases)
 	return releases
+}
+
+func getGenre(release interface{}) string {
+	r := release.(iRelease)
+	if len(r.BasicInformation.Genres) > 0 {
+		return r.BasicInformation.Genres[0]
+	}
+	if len(r.BasicInformation.Styles) > 0 {
+		return r.BasicInformation.Styles[0]
+	}
+	return ""
 }
